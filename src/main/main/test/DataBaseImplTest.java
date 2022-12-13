@@ -15,6 +15,7 @@ public class DataBaseImplTest {
     }
 
     @Test
+
     public void checkCreateUser() {
         User user = new User(0, "name", "second", "passport", "12345");
         User createdUser = dataBaseImpl.createUser(user);
@@ -42,7 +43,7 @@ public class DataBaseImplTest {
     }
 
     @Test(expected = DataBaseException.class)
-    public void checkDeleteUser() {
+    public void checkAfterDeletingUserNotExistInDb() {
         User user = new User(0, "name", "second", "passport", "12345");
         User createdUser = dataBaseImpl.createUser(user);
 
@@ -51,7 +52,7 @@ public class DataBaseImplTest {
     }
 
     @Test()
-    public void checkNotDeleteUser() {
+    public void checkDeleteUserReturnsCorrectValue() {
         User user = new User(0, "name", "second", "passport", "12345");
         User createdUser = dataBaseImpl.createUser(user);
 
@@ -61,7 +62,7 @@ public class DataBaseImplTest {
     }
 
     @Test(expected = DataBaseException.class)
-    public void checkDeleteNotExistUser() {
+    public void checkDeletingNotExistUserCausesException() {
         User user = new User(222222, "name", "second", "passport", "12345");
         dataBaseImpl.deleteUser(user.getId());
     }
@@ -88,7 +89,7 @@ public class DataBaseImplTest {
     }
 
     @Test
-    public void checkGetUserById() {
+    public void checkGetExistingUserByIdReturnsCorrectUser() {
         User user = new User(0, "name", "second", "passport", "12345");
         User createdUser = dataBaseImpl.createUser(user);
 
@@ -98,7 +99,7 @@ public class DataBaseImplTest {
     }
 
     @Test(expected = DataBaseException.class)
-    public void checkNotGetUserById() {
+    public void checkGetNotExitingUserByIdCausesException() {
         User user = new User(4566, "name", "second", "passport", "12345");
         dataBaseImpl.getUserById(user.getId());
 
