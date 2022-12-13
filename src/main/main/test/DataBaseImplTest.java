@@ -2,6 +2,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DataBaseImplTest {
 
     private DataBaseImpl dataBaseImpl;
@@ -64,10 +67,24 @@ public class DataBaseImplTest {
     }
 
     @Test
-    public void checkGetAllUsers() {
-        User user = new User(0, "name", "second", "passport", "12345");
-        dataBaseImpl.createUser(user);
-        dataBaseImpl.getAllUsers();
+    public void checkGetAllUsersReturnExpectedListWhenDbIsNotEmpty() {
+        User user1 = new User(0, "name", "second", "passport", "12345");
+        User createdUser1 = dataBaseImpl.createUser(user1);
+
+        User user2 = new User(0, "name2", "second", "passport", "12345");
+        User createdUser2 = dataBaseImpl.createUser(user2);
+
+        List<User> expectedUsers = new ArrayList<>();
+        expectedUsers.add(createdUser1);
+        expectedUsers.add(createdUser2);
+
+        Assert.assertEquals(expectedUsers, dataBaseImpl.getAllUsers());
+    }
+
+    @Test
+    public void checkGetAllUsersReturnsEmptyListWhenDbIsEmpty() {
+        List<User> emptyList = dataBaseImpl.getAllUsers();
+        Assert.assertTrue(emptyList.isEmpty());
     }
 
     @Test
